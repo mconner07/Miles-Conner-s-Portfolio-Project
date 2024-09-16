@@ -1,12 +1,10 @@
 # Portfolio Part 1: Component Brainstorming
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) then delete this comment -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) then delete this comment -->
-- **Due Date**: <!-- TODO: fill with due date and time (e.g., 10/17 @ 3:10 PM EST) then delete this comment -->
+- **Name**: Miles Conner
+- **Dot Number**: Conner.232
+- **Due Date**: 9/16 @ 3:00 PM EST
 
 ## Assignment Overview
-
-<!-- TODO: read the assignment overview then delete this comment -->
 
 The overall goal of the portfolio project is to have you design and implement
 your own OSU component. There are no limits to what you choose to design and
@@ -29,8 +27,6 @@ implement.
 
 ## Assignment Checklist
 
-<!-- TODO: browse the checklist then delete this comment -->
-
 To be sure you have completed everything on this assignment, we have littered
 this document with TODO comments. You can browse all of them in VSCode by
 opening the TODOs window from the sidebar. The icon looks like a tree and will
@@ -52,8 +48,6 @@ to the tree diagram (you may remove this one as well):
 
 ## Assignment Learning Objectives
 
-<!-- TODO: read the assignment learning objectives then delete this comment -->
-
 Without learning objectives, there really is no clear reason why a particular
 assessment or activity exists. Therefore, to be completely transparent, here is
 what we're hoping you will learn through this particular aspect of the portfolio
@@ -66,8 +60,6 @@ project. Specifically, students should be able to:
    discipline
 
 ## Assignment Rubric: 10 Points
-
-<!-- TODO: read the assignment rubric then delete this comment -->
 
 Again, to be completely transparent, most of the portfolio project, except the
 final submission, is designed as a formative assessment. Formative assessments
@@ -98,23 +90,17 @@ do good work.
 > brainstorming. Plus it helps us get to know you better! Feel free to share
 > images in this section.
 
-<!-- TODO: briefly talk about your interests then delete this comment.
-Also, protip: you can preview what your response looks like by hitting
-the magnifying glass icon in the upper-right corner or pressing CTRL+K and
-then V. This kind of button combination is called a chord, for whatever
-reason -->
+My career goals are to design computer hardware or work on low level software (BIOS software, driver software, operating systems, etc). I started out at OSU with ambitions of getting a CS degree to become a game programmer. I spent my free time messing around with game programming and many small, half finished, single level platformers later I found that I was actually more interested in the technology that games run on than the games themselves. I spent lots of time trying to build openGL renderers from scratch and this eventaully led me to a greater interest in computer hardware. Basically annoying internet forms telling me I had to write custom memory allocators and worry about CPU cache misses or I wasn't doing game engine dev right turned me onto the world of computer hardware, a world I enjoy even more than the world of game engines. So I switched my degree to electrical, and some day hope to work for AMD or Intel, designing CPUs. As far as my hobbies are concerned, I'm just a nerd whose life consists entirely of playing video games and doing homework.
+
+My component ideas are inspired by a game of life program that I worked on in high school, a matrix component that's inspired by the matrices I implemented in my computer graphics projects, and a complex number component that I like because it seems to fit the software discipline well and my life has become nothing but complex numbers since I became an ECE student.
 
 ## Assignment
-
-<!-- TODO: read the assignment section then delete this comment -->
 
 As previously stated, you are tasked with brainstorming 3 possible components.
 To aid you in this process, we have provided [some example components][example-components]
 that may help you in your brainstorming. All of these components were made at
 some point by one of your peers, so you should feel confident that you can
 accomplish any of them.
-
-<!-- TODO: browse the list of possible projects then delete this comment -->
 
 There is no requirement that you use any of the components listed above.
 If you want to model something else, go for it! Very common early object
@@ -123,8 +109,6 @@ etc. Make of this whatever seems interesting to you, and keep in mind that
 you're just brainstorming right now. You do not have to commit to anything.
 
 ### Example Component
-
-<!-- TODO: review this example component then delete this comment -->
 
 To help you brainstorm a few components, we've provided an example below of a
 component you already know well: NaturalNumber. We highly recommend that you
@@ -192,70 +176,102 @@ will likely refine your design to make your implementation easier to use.
 
 > Please use this section to share your designs.
 
-- Component Design #1: <!-- TODO: give component a name then delete this comment -->
+- Component Design #1: `Matrix`
   - **Description**:
-    - <!-- TODO: describe your component then delete this comment -->
+    - A component to model a matrix of arbitrary dimensionality (n by m). Methods that return the value of entries in the matrix and mutate the entries would be in the kernel and all of the typical math stuff you can do with matrices would be in the secondary interface (transpose, inverse, etc). If this is too ambitious I could model a matrix of a fixed size (like 3x3), or I could do a vector instead, and have the secondary methods compute dot products, magnitudes, etc. Alternatively, if I wanted to be more ambitious I could layer a matrix component on top of vector components.
   - **Kernel Methods**:
-    - <!-- TODO: list kernel methods then delete this comment -->
+    - `int lengthRows()`: returns number of rows in `this`
+    - `int lengthColumns()`: returns number of columns in `this`
+    - `double value(int row, int col)`: returns the entry at `(row, col)` in `this`
+    - `void setValue(int row, int col, double value)`: sets the entry at `(row, col)` in `this` to `value`
+    - `double determinant()`: returns the determinant of `this`
+    - `boolean isInvertible()`: returns whether or not `this` is invertible
+    - `boolean canBeAdded(Matrix m)`: returns whether or not `m` can be added to `this`
+    - `boolean canBeMultiplied(Matrix m)`: returns whether or not `this` can be multiplied by `m`
   - **Secondary Methods**:
-    - <!-- TODO: list secondary methods then delete this comment -->
+    - `void transpose()`: transposes `this`
+    - `void invert()`: inverts `this`
+    - `void scale(double n)`: multiplies every entry in `this` by `n`
+    - `void add(Matrix m)`: adds `m` to `this`
+    - `void subtract(Matrix m)`: subtracts `m` from this
+    - `void multiply(Matrix m)`: multiplies `this` by `m`
+    - `void divide(Matrix m)`: multiplies `this` by `1/m`
   - **Additional Considerations** (*note*: "I don't know" is an acceptable
     answer for each of the following questions):
     - Would this component be mutable? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes, `setValue()` in the kernal would mutate it, and every secondary method would mutate it.
     - Would this component rely on any internal classes (e.g., `Map.Pair`)?
       Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - It would just rely on Java primitives (I'm thinking the entries would probably be doubles) and Java arrays.
     - Would this component need any enums or constants (e.g.,
       `Program.Instruction`)? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - No, I don't think it would.
     - Can you implement your secondary methods using your kernel methods?
       Answer, explain, and give at least one example:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes. Many of the secondary methods would only be defined for certain matrices so my method contracts could be complicated but this is why I included `isInvertible()`, `canBeAdded()`, and `canBeMultiplied()` in the kernel, which themselves would rely on `lengthRows()`, `lengthColumns()`, and `determinant()` because I think that's all you need to check if addition, multiplication, and inversion is defined.
 
 
-- Component Design #2: <!-- TODO: give component a name then delete this comment -->
+- Component Design #2: `ComplexNumber`
   - **Description**:
-    - <!-- TODO: describe your component then delete this comment -->
+    - A component to model a complex number that would accept arguments in polar or rectangular form. The secondary methods would do complex math and report the result in either polar or rectangular form. Quaternions are also an option.
   - **Kernel Methods**:
-    - <!-- TODO: list kernel methods then delete this comment -->
+    - `double real()`: returns the real component of `this`
+    - `double imaginary()`: returns the imaginary component of `this`
+    - `double magnitude()`: returns the magnitude of `this` in polar form
+    - `double angle()`: returns the angle of `this` in polar form
+    - `void setValueRectangular(double real, double imaginary)`: sets `this` to (`real` + `imaginary` * i)
+    - `void setValuePolar(double magnitude, double angle)`: sets `this` to  (`magnitude` < `angle`)
+    - `int quadrant()`: returns the quadrant `this` falls in when `this` is in polar form (1-4)
+    - `void toRect()`: updates the rectangular form member variables to be equal to the polar form member variables
+    - `void toPolar()`: updates the polar form member variables to be equal to the rectangular form member variables
   - **Secondary Methods**:
-    - <!-- TODO: list secondary methods then delete this comment -->
+    - `void conjugate()`: does complex conjugation to `this`
+    - `void add(ComplexNumber z)`: adds `z` to this
+    - `void subtract(ComplexNumber z)`: subtracts `z` from `this`
+    - `void multiply(ComplexNumber z)`: multplies `this` by `z`
+    - `void divide(ComplexNumber z)`: divides `this` by `z`
+    - `void scale(double n)`: multiplies `this` by `n`
   - **Additional Considerations** (*note*: "I don't know" is an acceptable
     answer for each of the following questions):
     - Would this component be mutable? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes, setting the values from the kernel and all of the secondary methods would mutate it.
     - Would this component rely on any internal classes (e.g., `Map.Pair`)?
       Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - No, I don't think it would. Just Java doubles.
     - Would this component need any enums or constants (e.g.,
       `Program.Instruction`)? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - No, I don't think it would.
     - Can you implement your secondary methods using your kernel methods?
       Answer, explain, and give at least one example:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes. The secondary methods will use whichever representation (polar or rectangular) is more useful to do the math the method is doing and then call either `toRect()` or `toPolar()` to update the representation that it didn't modify. The `quadrant()` kernel method will be used by `toPolar()` to ensure that tangent gives an angle in the right quadrant.
 
 
-- Component Design #3: <!-- TODO: give component a name then delete this comment -->
+- Component Design #3: `Cell`
   - **Description**:
-    - <!-- TODO: describe your component then delete this comment -->
+    - A component modeling one cell in a cellular automaton, specifically a Conway's game of life cell. It would represent a current state and a next state, with an update method to update the current state to the next state. It would also keep track of its own grid position.
   - **Kernel Methods**:
-    - <!-- TODO: list kernel methods then delete this comment -->
+    - `boolean isAlive()`: returns whether or not `this` is on or off (current state)
+    - `void kill()`: sets next state of `this` to off
+    - `void giveLife()`: sets next state of `this` to on
+    - `void changeState()`: sets current state of `this` to the next state of `this`
+    - `int x()`: returns the x position of `this` in the grid
+    - `int y()`: returns the y position of `this` in the grid
   - **Secondary Methods**:
-    - <!-- TODO: list secondary methods then delete this comment -->
+    - `int livingNeighbors(Cell[] grid)`: returns how many of the neighboring cells of `this` have a current state of alive
+    - `void nextState(int livingNeighbors)`: sets the next state of `this` based on how many living neighbors `this` has
   - **Additional Considerations** (*note*: "I don't know" is an acceptable
     answer for each of the following questions):
     - Would this component be mutable? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes, the kernel methods will mutate its state. However, I don't think the grid position would be mutable.
     - Would this component rely on any internal classes (e.g., `Map.Pair`)?
       Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Just Java primitives and arrays. The states would be represented with booleans and the grid position with ints. The program using this component would have a big array of cells that it would loop through to update them. A program with a GUI could even display the cell states graphically, although this would require timing if the display was going to update itself over time.
     - Would this component need any enums or constants (e.g.,
       `Program.Instruction`)? Answer and explain:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - No, the component itself wouldn't. A game of life program using the component might however.
     - Can you implement your secondary methods using your kernel methods?
       Answer, explain, and give at least one example:
-      - <!-- TODO: provide an argument then delete this comment -->
+      - Yes, the grid positions in conjunction with the current state can be used by `livingNeighbors()` to determine how many living cells neighbor each cell, and `nextState()` can call `changeState()` on each of them to actually make the update happen.
 
 ## Post-Assignment
 
@@ -263,8 +279,6 @@ The following sections detail everything that you should do once you've
 completed the assignment.
 
 ### Changelog
-
-<!-- TODO: create CHANGELOG then delete this comment -->
 
 At the end of every assignment, you should update the
 [CHANGELOG.md](../../CHANGELOG.md) file found in the root of the project folder.
@@ -282,13 +296,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Calendar Versioning](https://calver.org/) of
 the following form: YYYY.0M.0D.
 
-## YYYY.MM.DD
+## 2024.09.16
 
 ### Added
 
-- Designed a <!-- insert name of component 1 here --> component
-- Designed a <!-- insert name of component 2 here --> component
-- Designed a <!-- insert name of component 3 here --> component
+- Designed a `Matrix` component
+- Designed a `ComplexNumber` component
+- Designed a `Cell` component
 ```
 
 Here `YYYY.MM.DD` would be the date of your submission, such as 2024.04.21.
@@ -303,8 +317,6 @@ of development.
 
 ### Submission
 
-<!-- TODO: read the submission instructions then delete this comment -->
-
 If you have completed the assignment using this template, we recommend that
 you convert it to a PDF before submission. If you're not sure how, check out
 this [Markdown to PDF guide][markdown-to-pdf-guide]. However, PDFs should be
@@ -313,11 +325,7 @@ all your work is there before submitting. For future assignments, you will
 just be submitting a link to a pull request. This will be the only time
 you have to submit any PDFs.
 
-<!-- TODO: upload a PDF of this document and the CHANGELOG to Carmen then delete this comment -->
-
 ### Peer Review
-
-<!-- TODO: review the peer review guidelines then delete this comment -->
 
 Following the completion of this assignment, you will be assigned three
 students' component brainstorming assignments for review. Your job during the
@@ -343,8 +351,6 @@ PDF to read this rubric as a table).
 If you'd like to give feedback for this assignment (or any assignment, really),
 make use of [this survey][survey]. Your feedback helps make assignments
 better for future students.
-
-<!-- TODO: follow the link to share your feedback then delete this comment -->
 
 [example-components]: https://therenegadecoder.com/code/the-never-ending-list-of-small-programming-project-ideas/
 [markdown-to-pdf-guide]: https://therenegadecoder.com/blog/how-to-convert-markdown-to-a-pdf-3-quick-solutions/
